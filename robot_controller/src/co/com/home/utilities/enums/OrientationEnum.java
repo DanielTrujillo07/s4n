@@ -48,6 +48,71 @@ public enum OrientationEnum {
 
 	
 	/**
+	 * Método encargado de calcular una orientacion segun la orientacion actual y el comando ingresado
+	 * @param command comando para calcular orientacion
+	 * @return nueva orientacion calculada
+	 */
+	public OrientationEnum calculateOrientation(RobotCommandsEnum command) {
+		// Se hace el resultado a la orientacion actual
+		OrientationEnum resultado = this;
+		// Se verifica si la orientacion actual es NORTE
+		if(this.equals(OrientationEnum.NORTH)){
+			switch (command) {
+			// Si se esta en norte y el giro es a la izquierda se retorna OESTE
+			case LEFT:
+				resultado = OrientationEnum.WEST;
+				break;
+				// Ya que el giro no es a la izquierda se toma por defecto a la derecha y estando al norte se retorna ESTE
+			default:
+				resultado = OrientationEnum.EAST;
+				break;
+			}
+		}else{
+			// Se verifica si la orientacion actual es ESTE
+			if(this.equals(OrientationEnum.EAST)){
+				switch (command) {
+				// Si se esta en ESTE y el giro es a la izquierda se retorna NORTE
+				case LEFT:
+					resultado = OrientationEnum.NORTH;
+					break;
+					// Ya que el giro no es a la izquierda se toma por defecto a la derecha y estando al ESTE se retorna SUR
+				default:
+					resultado = OrientationEnum.SOUTH;
+					break;
+				}
+			}else{
+				// Se verifica si la orientacion actual es SUR
+				if(this.equals(OrientationEnum.SOUTH)){
+					switch (command) {
+					// Si se esta en SUR y el giro es a la izquierda se retorna ESTE
+					case LEFT:
+						resultado = OrientationEnum.EAST;
+						break;
+						// Ya que el giro no es a la izquierda se toma por defecto a la derecha y estando al SUR se retorna OESTE
+					default:
+						resultado = OrientationEnum.WEST;
+						break;
+					}
+				}else{
+					// Se procede como si la orientacion fuera OESTE
+					switch (command) {
+					// Si se esta en OESTE y el giro es a la izquierda se retorna SUR
+					case LEFT:
+						resultado = OrientationEnum.SOUTH;
+						break;
+						// Ya que el giro no es a la izquierda se toma por defecto a la derecha y estando al OESTE se retorna NORTE
+					default:
+						resultado = OrientationEnum.NORTH;
+						break;
+					}
+				}
+			}
+		}		
+		return resultado;
+	}
+	
+	
+	/**
 	 * get the value of the attribute value 
 	 * @return the value value
 	 */
